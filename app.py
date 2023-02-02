@@ -1,5 +1,5 @@
 import streamlit as st
-
+import computation as c
 st.write(
     """
     # Plagiarism Detector
@@ -7,8 +7,6 @@ st.write(
 )
 
 st.write("##")
-
-submissions = dict()
 
 with st.form("assignment_form"):
     st.write(
@@ -25,9 +23,19 @@ with st.form("assignment_form"):
         if(not mis_val or not code):
             st.error("Missing MIS or Code! Please enter all values.")
         else:
-            submissions[mis_val] = code
+            c.submissions.append((mis_val, code))
 
             
             
-        st.write(submissions)
+        st.write(c.submissions)
 
+score_pressed = st.button("Calculate Scores")
+if(score_pressed):
+    message = c.compute_scores()
+    if message!="Done!":
+        st.error(message)
+    else :
+        st.success(message)
+        c.compute_scores()
+        st.write(c.scores)
+    
