@@ -36,6 +36,9 @@ if(score_pressed):
         st.error(message)
     else :
         st.success(message)
+        st.write("""
+            ## Scores
+        """)
         c.compute_scores()
-        st.write(c.scores)
+        st.table(c.getDataFrame())
     
