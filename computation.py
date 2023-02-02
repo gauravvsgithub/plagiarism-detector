@@ -1,3 +1,4 @@
+import pandas as pd
 submissions = []
 scores = dict()
 
@@ -40,3 +41,14 @@ def compute_scores():
                 scores[mis2] = max(scores[mis2], curr_score)
 
     return "Done!"
+
+def getDataFrame():
+    global scores
+    data = dict()
+    data['MIS No'] = []
+    data['Plagiarism Score'] = []
+    for key, val in scores.items():
+        data['MIS No'].append(key)
+        data['Plagiarism Score'].append(val)
+    df = pd.DataFrame.from_dict(data)
+    return df
