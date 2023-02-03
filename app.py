@@ -1,5 +1,18 @@
 import streamlit as st
 import computation as c
+
+
+# sidebar
+
+with st.sidebar:
+    radio_res = st.radio(
+        "Choose Algorithm",
+        ("LCS", "No Idea")
+    )
+    
+
+
+
 st.write(
     """
     # Plagiarism Detector
