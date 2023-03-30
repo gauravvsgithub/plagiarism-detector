@@ -6,7 +6,7 @@ import computation as c
 with st.sidebar:
     radio_res = st.radio(
         "Choose Algorithm",
-        ("LCS", "No Idea")
+        ("LCS", "AST(same language)")
     )
 
 # page header
