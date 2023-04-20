@@ -1,5 +1,10 @@
 import pandas as pd
-import ast
+
+import astor
+import esprima
+import javalang
+import clang.cindex as cindex
+
 import computation as c
 submissions = c.submissions
 scores = dict()

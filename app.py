@@ -1,12 +1,22 @@
 import streamlit as st
 import computation as c
+import compute_ast_same_lang as casl
+import os
 
+folderPath = "./submissions"
+
+def writeFiles(MIS, lang, code):
+    fileName = MIS+".txt"
+    with open(os.path.join(folderPath,fileName), 'a') as f:
+        f.write(MIS+'\n')
+        f.write(lang+'\n')
+        f.write(code)
 
 # sidebar
 with st.sidebar:
     radio_res = st.radio(
         "Choose Algorithm",
-        ("LCS", "AST(same language)")
+        ("LCS", "AST(same language)", "AST(diff. language)")
     )
 
 # page header
@@ -39,7 +49,8 @@ with tab1:
             if(not mis_val or not code):
                 st.error("Missing MIS or Code! Please enter all values.")
             else:
-                c.submissions.append((mis_val, code))
+                c.submissions.append((mis_val, language, code))
+                writeFiles(mis_val, language, code)
 
             st.write(c.submissions)
 
@@ -47,14 +58,36 @@ with tab2:
     st.header("For Evaluators")
     score_pressed = st.button("Calculate Scores")
     if(score_pressed):
-        message = c.compute_scores()
-        if message!="Done!":
-            st.error(message)
-        else :
-            st.success(message)
-            st.write("""
-                ## Scores
-            """)
-            c.compute_scores()
-            st.table(c.getDataFrame())
+        if radio_res == "LCS":
+            message = c.compute_scores()
+            if message!="Done!":
+                st.error(message)
+            else :
+                st.success(message)
+                st.write("""
+                    ## Scores
+                """)
+                c.compute_scores()
+                st.table(c.getDataFrame())
+        elif radio_res == "AST(same language)":
+            message = casl.compute_scores()
+            if message!="Done!":
+                st.error(message)
+            else:
+                st.success(message)
+                st.write("""
+                    ## Scores
+                """)
 
+                st.table(casl.getDataFrame())
+        else:
+            message = casl.compute_scores()
+            if message!="Done!":
+                st.error(message)
+            else:
+                st.success(message)
+                st.write("""
+                    ## Scores
+                """)
+
+                st.table(casl.getDataFrame())
