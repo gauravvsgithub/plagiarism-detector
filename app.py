@@ -1,6 +1,7 @@
 import streamlit as st
 import computation as c
 import compute_ast_same_lang as casl
+import compute_ast_diff_lang as cadl
 import os
 
 folderPath = "./submissions"
@@ -81,13 +82,11 @@ with tab2:
 
                 st.table(casl.getDataFrame())
         else:
-            message = casl.compute_scores()
-            if message!="Done!":
-                st.error(message)
-            else:
-                st.success(message)
-                st.write("""
-                    ## Scores
-                """)
+            result, python_codes, js_codes = cadl.get_result()
 
-                st.table(casl.getDataFrame())
+            for i in range(len(result)):
+                st.code(python_codes[i])
+                st.code(js_codes[i])
+                st.write(result[i])
+                st.markdown("""---""")
+
